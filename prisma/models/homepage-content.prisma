@@ -1,0 +1,37 @@
+// ==========================================
+// Homepage Content Model
+// ==========================================
+
+model HomepageContent {
+  id                    String      @id @default(auto()) @map("_id") @db.ObjectId
+  
+  // Hero Section
+  heroTitle             String?
+  heroDescription       String?
+  heroButtonText1      String?
+  heroButtonText2      String?
+  heroButtonLink1       String?
+  heroButtonLink2       String?
+  heroBackgroundImage1  String?
+  heroBackgroundImage2  String?
+  
+  // Section Two
+  sectionTwoTitle       String?
+  sectionTwoDescription String?
+  
+  // Section Three
+  sectionThreeTitle     String?
+  
+  // Section Four
+  sectionFourTitle      String?
+  sectionFourDescription String?
+  sectionFourButtonText String?
+  sectionFourButtonLink String?
+  sectionFourImage      String?
+  
+  isActive              Boolean     @default(true)
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  @@map("homepage_content")
+}
