@@ -43,7 +43,7 @@ app.use('/api/', limiter);
 
 // CORS middleware
 app.use(cors({
-  origin: '*', 
+  origin: ['http://localhost:3000', 'https://sayadelsamak.com'], 
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
