@@ -24,6 +24,7 @@ class HomepageService {
           mainImage: true,
           weight: true,
           unit: true,
+          salesCount: true,
           category: {
             select: {
               nameAr: true,
@@ -35,10 +36,12 @@ class HomepageService {
         skip: skip,
       });
 
+      const transformedProducts = this.transformProducts(products);
+
       return {
         success: true,
-        data: products,
-        count: products.length,
+        data: transformedProducts,
+        count: transformedProducts.length,
       };
     } catch (error) {
       console.error('Error fetching featured products:', error);
@@ -86,10 +89,12 @@ class HomepageService {
         skip: skip,
       });
 
+      const transformedProducts = this.transformProducts(products);
+
       return {
         success: true,
-        data: products,
-        count: products.length,
+        data: transformedProducts,
+        count: transformedProducts.length,
       };
     } catch (error) {
       console.error('Error fetching best sellers:', error);
@@ -123,6 +128,7 @@ class HomepageService {
           mainImage: true,
           weight: true,
           unit: true,
+          salesCount: true,
           category: {
             select: {
               nameAr: true,
@@ -136,10 +142,12 @@ class HomepageService {
         skip: skip,
       });
 
+      const transformedProducts = this.transformProducts(products);
+
       return {
         success: true,
-        data: products,
-        count: products.length,
+        data: transformedProducts,
+        count: transformedProducts.length,
       };
     } catch (error) {
       console.error('Error fetching new arrivals:', error);
@@ -170,10 +178,12 @@ class HomepageService {
         ...(query.limit && { take: query.limit }),
       });
 
+      const transformedCategories = this.transformCategories(categories);
+
       return {
         success: true,
-        data: categories,
-        count: categories.length,
+        data: transformedCategories,
+        count: transformedCategories.length,
       };
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -442,6 +452,44 @@ class HomepageService {
       console.error('Error uploading image:', error);
       throw new Error(`فشل رفع الصورة: ${error.message}`);
     }
+  }
+
+  transformProducts(products) {
+    return products.map((product) => {
+      const discount =
+        product.originalPrice && product.originalPrice > product.price
+          ? Math.round(
+              ((product.originalPrice - product.price) /
+                product.originalPrice) *
+                100,
+            )
+          : product.discount;
+
+      return {
+        id: product.id,
+        name: product.nameAr,
+        price: product.price,
+        originalPrice: product.originalPrice || product.price,
+        image: product.mainImage,
+        badge: discount > 0 ? `خصم ${discount}%` : 'جديد',
+        description:
+          product.descriptionAr ||
+          `${product.nameAr} ${product.weight || ''} ${product.unit || ''}`.trim(),
+        categoryName: product.category?.nameAr || '',
+        salesCount: product.salesCount,
+      };
+    });
+  }
+
+  transformCategories(categories) {
+    return categories.map((category) => ({
+      id: category.id,
+      name: category.nameAr,
+      slug: category.slug,
+      image: category.image || '',
+      description: category.descriptionAr,
+      sortOrder: category.sortOrder,
+    }));
   }
 
   buildOrderBy(sortBy, sortOrder) {

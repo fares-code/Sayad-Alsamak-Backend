@@ -5,6 +5,15 @@ const homepageService = require('../../services/homepage.service');
 const { auth, adminAuth } = require('../../middleware/auth');
 
 // Public routes
+router.get('/all-data', async (req, res, next) => {
+  try {
+    const result = await homepageService.getAllHomepageData();
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/data', async (req, res, next) => {
   try {
     const result = await homepageService.getAllHomepageData();
@@ -23,7 +32,7 @@ router.get('/content', async (req, res, next) => {
   }
 });
 
-router.get('/featured', async (req, res, next) => {
+router.get('/featured-products', async (req, res, next) => {
   try {
     const query = {
       limit: req.query.limit ? parseInt(req.query.limit) : undefined,

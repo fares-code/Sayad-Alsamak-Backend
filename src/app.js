@@ -43,7 +43,7 @@ app.use('/api/', limiter);
 
 // CORS middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://sayadelsamak.com'], 
+  origin: '*', // Allow all origins for production
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -90,7 +90,7 @@ app.use('/api/v1/homepage', homepageRoutes);
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
-    error: 'Route not found',
+    error: 'check the onthor route',
   });
 });
 
