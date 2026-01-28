@@ -36,6 +36,18 @@ router.get('/', auth, adminAuth, async (req, res, next) => {
   }
 });
 
+router.get('/stats', auth, adminAuth, async (req, res, next) => {
+  try {
+    const stats = await contactMessagesService.getStats();
+    res.status(200).json({
+      success: true,
+      data: stats,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/stats/overview', auth, adminAuth, async (req, res, next) => {
   try {
     const stats = await contactMessagesService.getStats();
@@ -60,7 +72,7 @@ router.get('/:id', auth, adminAuth, async (req, res, next) => {
   }
 });
 
-router.put('/:id', auth, adminAuth, async (req, res, next) => {
+router.patch('/:id', auth, adminAuth, validate(schemas.updateContactMessage), async (req, res, next) => {
   try {
     const message = await contactMessagesService.update(req.params.id, req.body);
     res.status(200).json({

@@ -59,7 +59,7 @@ router.get('/:id', auth, adminAuth, async (req, res, next) => {
   }
 });
 
-router.put('/:id', auth, adminAuth, async (req, res, next) => {
+router.patch('/:id', auth, adminAuth, async (req, res, next) => {
   try {
     const content = await aboutUsService.update(req.params.id, req.body);
     res.status(200).json({

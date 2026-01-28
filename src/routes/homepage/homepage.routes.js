@@ -103,7 +103,7 @@ router.post('/content', auth, adminAuth, async (req, res, next) => {
   }
 });
 
-router.put('/content/:id', auth, adminAuth, async (req, res, next) => {
+router.patch('/content/:id', auth, adminAuth, async (req, res, next) => {
   try {
     const result = await homepageService.updateHomepageContent(req.params.id, req.body);
     res.status(200).json(result);
@@ -112,7 +112,7 @@ router.put('/content/:id', auth, adminAuth, async (req, res, next) => {
   }
 });
 
-router.put('/content/:id/with-images', auth, adminAuth, async (req, res, next) => {
+router.patch('/content/:id/with-images', auth, adminAuth, async (req, res, next) => {
   try {
     const result = await homepageService.updateHomepageContentWithImages(req.params.id, req.body);
     res.status(200).json(result);

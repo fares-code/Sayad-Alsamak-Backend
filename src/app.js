@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 
+
+
 const config = require('./config/environment');
 const { testConnection } = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
@@ -21,6 +23,9 @@ const aboutUsRoutes = require('./routes/about-us/about-us.routes');
 const homepageRoutes = require('./routes/homepage/homepage.routes');
 
 const app = express();
+
+// Initialize Next.js
+
 
 // Test database connection
 testConnection();
@@ -86,23 +91,27 @@ app.use('/api/v1/contact-info', contactInfoRoutes);
 app.use('/api/v1/about-us', aboutUsRoutes);
 app.use('/api/v1/homepage', homepageRoutes);
 
-// 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    error: 'check the onthor route',
-  });
-});
-
 // Error handling middleware (must be last)
 app.use(errorHandler);
 
+
 // Start server
-const PORT = config.PORT;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`🌍 Environment: ${config.NODE_ENV}`);
-  console.log(`📚 API docs: http://localhost:${PORT}/api/v1`);
-});
+const startServer = async () => {
+  try {
+    
+    const PORT = config.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`🌍 Environment: ${config.NODE_ENV}`);
+      console.log(`📚 API docs: http://localhost:${PORT}/api/v1`);
+      console.log(`🎨 Frontend: http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 module.exports = app;

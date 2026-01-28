@@ -124,7 +124,7 @@ router.post('/', auth, adminAuth, validate(schemas.product), validateProductWhol
   }
 });
 
-router.put('/:id', auth, adminAuth, validate(schemas.product), validateProductWholesalePricing, async (req, res, next) => {
+router.patch('/:id', auth, adminAuth, validate(schemas.updateProduct), validateProductWholesalePricing, async (req, res, next) => {
   try {
     const product = await productService.update(req.params.id, req.body);
     res.status(200).json({
