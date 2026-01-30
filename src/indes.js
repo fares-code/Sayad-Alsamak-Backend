@@ -48,7 +48,7 @@ app.use('/api/', limiter);
 
 // CORS middleware
 app.use(cors({
-  origin: '*', // Allow all origins for production
+  origin: process.env.FRONTEND_URL || 'http://localhost:3001',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -104,7 +104,6 @@ const startServer = async () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`🌍 Environment: ${config.NODE_ENV}`);
       console.log(`📚 API docs: http://localhost:${PORT}/api/v1`);
-      console.log(`🎨 Frontend: http://localhost:${PORT}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
