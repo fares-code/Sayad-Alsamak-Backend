@@ -4,7 +4,7 @@
   "description": "Express version of Sayad Alsamak backend",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node src/index.js",
     "dev": "nodemon src/app.js",
     "build": "echo 'Express build completed - no compilation needed'",
     "build:prod": "echo 'Production build ready' && npm run lint",
