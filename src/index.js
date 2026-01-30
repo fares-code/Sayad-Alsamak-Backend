@@ -23,7 +23,7 @@ const aboutUsRoutes = require('./routes/about-us/about-us.routes');
 const homepageRoutes = require('./routes/homepage/homepage.routes');
 
 const app = express();
-
+app.set('trust proxy', 1);
 // Initialize Next.js
 
 
